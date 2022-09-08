@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
@@ -6,12 +7,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int[][] colors = new int[SIZE][SIZE]; // исходная матрица
+        int[][] colors = new int[SIZE][SIZE];
 
         // TODO заполнение матрицы случайными значениями в диапазоне от 0 до 255:
         Random random = new Random();
-        for (int i = 0; i< SIZE; i++) {
-            for (int j = 0; j< SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 // для случайных значений воспользуемся готовым решением из библиотеки java.util.Random
                 colors[i][j] = random.nextInt(256);
             }
@@ -19,22 +20,37 @@ public class Main {
 
         print(colors);
 
-        int[][] rotatedColors = new int[SIZE][SIZE]; // перевёрнутая матрица
+        System.out.println("Введите угол поворота кратный 90");
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+        int countRotate = input / 90;
+        scanner.close();
 
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j< SIZE; j++) {
-                rotatedColors[i][j] = colors[SIZE-j-1][i];
-            }
+        for (int i = 0; i < countRotate; i++) {
+            colors = rotate(colors);
         }
-        System.out.println("Новый массив");
-        print(rotatedColors);
 
+        System.out.println("Новая матрица c поворотом на " + input + " градусов");
+        print(colors);
 
     }
+
+    // TODO Поворот матрицы на 90 градусов
+    public static int[][] rotate(int[][] colors) {
+        int[][] tmp = new int[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                tmp[i][j] = colors[SIZE - j - 1][i];
+            }
+        }
+        return tmp;
+
+    }
+
     //  TODO Вывод матрицы на экран
     public static void print(int[][] colors) {
-        for (int i = 0; i< SIZE; i++) {
-            for (int j = 0; j< SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 // %4d означает, что мы под каждый номер резервируем 4 знака
                 // (незанятые будут заполнены пробелами)
                 // таким образом, у нас получится ровная таблица
